@@ -19,13 +19,12 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
-        //return request()->ip();
         $credentials = $this->validate($request, [
             'email' => 'required',
             'password' => 'required'
         ]);
         $user = User::whereEmail($credentials["email"])->first();
-        //return $user->Rol->id;
+
         if ($user && Auth::attempt($credentials)) {
             $user->last_session = new DateTime();
             $user->update();
